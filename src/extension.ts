@@ -92,6 +92,10 @@ async function getProjectGhcVersion(context: ExtensionContext, release: IRelease
   const dest = path.join(context.globalStoragePath, wrapperName);
   const wrapperUrl = url.parse(wrapperAsset.browser_download_url);
 
+  if (!fs.existsSync(context.globalStoragePath)) {
+    fs.mkdirSync(context.globalStoragePath);
+  }
+
   const downloadedWrapper = await downloadFile('Downloading haskell-language-server-wrapper', wrapperUrl, dest);
   if (!downloadedWrapper) {
     return null;
